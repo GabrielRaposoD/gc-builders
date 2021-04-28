@@ -1,10 +1,15 @@
 // Modules Import
 import { DefaultSeo } from 'next-seo';
+import type { AppProps } from 'next/app';
+import { GoogleFonts } from 'next-google-fonts';
 
 // Application Imports
 import '@styles/tailwind.css';
 
-function MyApp({ Component, pageProps, router }) {
+const Noop: React.FC = ({ children }) => <>{children}</>;
+
+function MyApp({ Component, pageProps, router }: AppProps) {
+  const Layout = (Component as any).Layout || Noop;
   return (
     <>
       <DefaultSeo
@@ -17,7 +22,10 @@ function MyApp({ Component, pageProps, router }) {
           site_name: 'Western HouseWerks',
         }}
       />
-      <Component {...pageProps} />
+      <GoogleFonts href='https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800;900&display=swap' />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
